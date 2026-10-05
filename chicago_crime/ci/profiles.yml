@@ -1,0 +1,10 @@
+chicago_crime:
+  target: ci
+  outputs:
+    ci:
+      type: bigquery
+      method: oauth
+      project: chicago-crime-dbt
+      dataset: chicago_crime_dbt
+      threads: 4
+      location: US
