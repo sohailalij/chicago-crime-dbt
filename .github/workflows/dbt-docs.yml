@@ -37,8 +37,12 @@ jobs:
         run: dbt deps
         working-directory: chicago_crime
 
+      - name: Parse project
+        run: dbt parse
+        working-directory: chicago_crime
+
       - name: Generate docs
-        run: dbt docs generate --empty-catalog
+        run: dbt docs generate --empty-catalog --no-compile --no-populate-cache
         working-directory: chicago_crime
 
       - name: Prepare site
