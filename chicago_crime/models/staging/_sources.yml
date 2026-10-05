@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: chicago_crime
+    database: bigquery-public-data
+    schema: chicago_crime
+    tables:
+      - name: crime

@@ -1,0 +1,121 @@
+version: 2
+
+models:
+  - name: mart_district_monthly_kpis
+    description: Monthly incident counts and rate KPIs for each police district.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [district, crime_month]
+    columns:
+      - name: district
+        description: Police district number.
+        data_tests:
+          - not_null
+      - name: crime_month
+        description: First day of the month.
+        data_tests:
+          - not_null
+      - name: incidents
+        description: Number of incidents in the month.
+        data_tests:
+          - not_null
+      - name: arrests
+        description: Incidents that ended in an arrest.
+      - name: domestic_incidents
+        description: Domestic-related incidents.
+      - name: night_incidents
+        description: Incidents between 8 PM and 6 AM.
+      - name: arrest_rate_pct
+        description: Arrests as a percent of incidents.
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+      - name: domestic_share_pct
+        description: Domestic incidents as a percent of incidents.
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+      - name: night_share_pct
+        description: Night incidents as a percent of incidents.
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+      - name: yoy_change_pct
+        description: Percent change in incidents versus the same month one year earlier.
+
+  - name: mart_district_summary
+    description: All-time totals per district compared with the citywide arrest rate.
+    columns:
+      - name: district
+        description: Police district number.
+        data_tests:
+          - unique
+          - not_null
+      - name: incidents
+        description: Total incidents in the district.
+      - name: arrest_rate_pct
+        description: District arrest rate in percent.
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+      - name: citywide_arrest_rate_pct
+        description: Arrest rate across all districts in percent.
+      - name: arrest_rate_gap_pts
+        description: District arrest rate minus the citywide rate, in percentage points.
+      - name: night_share_pct
+        description: Night incidents as a percent of the district total.
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+
+  - name: mart_crime_type_trends
+    description: Yearly incident counts and rate KPIs for each crime type.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [crime_year, primary_type]
+    columns:
+      - name: crime_year
+        description: Year of the incidents.
+        data_tests:
+          - not_null
+      - name: primary_type
+        description: Primary crime category.
+        data_tests:
+          - not_null
+      - name: incidents
+        description: Number of incidents in the year.
+      - name: arrest_rate_pct
+        description: Arrests as a percent of incidents.
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+      - name: night_share_pct
+        description: Night incidents as a percent of incidents.
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+      - name: share_of_year_pct
+        description: This crime type as a percent of all incidents that year.
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+      - name: yoy_change_pct
+        description: Percent change in incidents versus the prior year.

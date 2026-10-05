@@ -1,0 +1,6 @@
+.venv/
+logs/
+chicago_crime/target/
+chicago_crime/dbt_packages/
+chicago_crime/logs/
+__pycache__/
