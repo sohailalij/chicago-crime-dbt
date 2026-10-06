@@ -1,4 +1,4 @@
-# Chicago Crime KPIs with dbt and BigQuery
+# Chicago Crime Analytics Pipeline
 
 ![dbt CI](https://github.com/sohailalij/chicago-crime-dbt/actions/workflows/dbt-ci.yml/badge.svg)
 ![Deploy dbt docs](https://github.com/sohailalij/chicago-crime-dbt/actions/workflows/dbt-docs.yml/badge.svg)
